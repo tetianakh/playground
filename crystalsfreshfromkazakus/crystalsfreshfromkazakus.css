@@ -2,9 +2,19 @@ body, html {
     height: 100%;
 }
 
-.display {
+#display {
   background-image: url('./images/Kabal.jpg');
   height: 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.image {
+  position: absolute;
+  width: 286px;
+  height: 395px;
+  background-image: url('./images/Card.jpg');
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
