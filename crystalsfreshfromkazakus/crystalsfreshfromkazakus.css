@@ -1,3 +1,11 @@
-body {
-  background: 'images/Kabal.jpg';
+body, html {
+    height: 100%;
+}
+
+.display {
+  background-image: url('./images/Kabal.jpg');
+  height: 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
 }
