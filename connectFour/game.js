@@ -2,15 +2,15 @@ var GREY = 'rgb(204, 204, 204)'
 var NUM_ROWS = 6;
 var NUM_COLS = 7;
 
-  var A = 'A';
-  var B = 'B';
+var A = 'Blue';
+var B = 'Red';
 
-  var colors = {
-    A: 'rgb(68, 128, 226)',
-    B: 'rgb(226, 68, 83)',
+var colors = {
+    Blue: 'rgb(68, 128, 226)',
+    Red: 'rgb(226, 68, 83)',
   }
 
-  function changePlayer (player) {
+function changePlayer (player) {
     if (player === A) {
       return B;
     }
@@ -21,31 +21,41 @@ var NUM_COLS = 7;
 var player = A;
 var table = $("table tr");
 
-
+function announceTurn (){
+  $("h3").text("It's " + player + "'s turn. Pick a column to drop in!")
+}
 
 function game () {
     var col = $(this).parent().children().index($(this));
-    var row = $(this).closest('tr').index();
-    console.log('Button was clicked at row: ' + row + ', column: ' + col);
-    changeColor(col, colors[player]);
+    var changed = changeColor(col, colors[player]);
+    if (changed === false) {
+      return;
+    }
 
     if (checkWin()) {
-      alert('Player ' + player + ' wins!');
-      reset();
+      $("h3").text(player + ' wins!');
+      return;
+    }
+    if (boardIsFull()) {
+      $("h3").text("The board is full. Game over!");
       return;
     }
 
     changeActivePlayer();
+    announceTurn();
   }
 
-  function reset () {
+
+function reset () {
     $("td button").css('background-color', GREY);
     player = A;
+    announceTurn();
   }
 
-
+reset();
 $("#reset").click(reset)
 $("td").click(game);
+
 
 
 function changeActivePlayer () {
@@ -70,14 +80,15 @@ function changeColor (columnIndex, color) {
   for (var row = NUM_ROWS-1; row >= 0; row--) {
     if (getButtonColor(columnIndex, row) === GREY) {
       changeButtonColor(columnIndex, row, color);
-      return;
+      return true;
     }
   }
+  return false;
 }
 
 
 function checkWin () {
-  return checkWinRows() || checkWinColumns() || checkWinDiagonals();
+  return checkWinRows() || checkWinColumns() || checkWinRightDiagonals() || checkWinLeftDiagonals();
 }
 
 function checkWinRows(){
@@ -104,7 +115,7 @@ function checkWinColumns(){
   return false;
 }
 
-function checkWinDiagonals(){
+function checkWinRightDiagonals(){
   var btn;
   for (var i = 0; i < NUM_COLS-3; i++) {
     for (var j = 0; j < NUM_ROWS-3; j++) {
@@ -114,4 +125,26 @@ function checkWinDiagonals(){
     }
   }
   return false;
+}
+
+function checkWinLeftDiagonals(){
+  var btn;
+  for (var i = 4; i < NUM_COLS; i++) {
+    for (var j = 0; j < NUM_ROWS-3; j++) {
+      btn = getButtonColor(i, j);
+      if (btn !== GREY && btn === getButtonColor(i-1, j+1) && btn === getButtonColor(i-2, j+2) && btn === getButtonColor(i-3, j+3) && btn !== undefined)
+        return true;
+    }
+  }
+  return false;
+}
+
+
+function boardIsFull() {
+  for (var i = 0; i < NUM_COLS; i++) {
+    if (getButtonColor(i, 0) === GREY){
+      return false;
+    }
+  }
+  return true;
 }
