@@ -21,11 +21,17 @@ function changePlayer (player) {
 var player = A;
 var table = $("table tr");
 
+var gameOn = true;
+
 function announceTurn (){
   $("h3").text("It's " + player + "'s turn. Pick a column to drop in!")
 }
 
 function game () {
+    if (!gameOn){
+      return;
+    }
+
     var col = $(this).parent().children().index($(this));
     var changed = changeColor(col, colors[player]);
     if (changed === false) {
@@ -34,10 +40,12 @@ function game () {
 
     if (checkWin()) {
       $("h3").text(player + ' wins!');
+      gameOn = false;
       return;
     }
     if (boardIsFull()) {
       $("h3").text("The board is full. Game over!");
+      gameOn = false;
       return;
     }
 
@@ -49,12 +57,13 @@ function game () {
 function reset () {
     $("td button").css('background-color', GREY);
     player = A;
+    gameOn = true;
     announceTurn();
   }
 
-reset();
 $("#reset").click(reset)
 $("td").click(game);
+reset();
 
 
 
