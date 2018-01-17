@@ -1,7 +1,15 @@
 .board button {
-  width: 100px;
-  height: 100px;
+  width: 60px;
+  height: 60px;
   background-color: #ccc;
-  border: 3px solid #aaa;
+  border: 1px solid #aaa;
   border-radius: 50%;
+}
+
+.board {
+  margin: auto;
+}
+
+.board button:active, .board button:focus {
+  outline: none;
 }
