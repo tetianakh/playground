@@ -3,4 +3,8 @@ from django.shortcuts import render
 
 
 def index(request):
-    return HttpResponse("<em>I did it!</em>")
+    return render(request, 'my_app/index.html', context={})
+
+
+def help(request):
+    return render(request, 'my_app/help.html', context={'foo': 'bar'})

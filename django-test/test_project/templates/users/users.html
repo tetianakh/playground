@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Users</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <div class="container">
+
+
+    <h1>This page contains an awesome list of users.</h1>
+
+    {% if users %}
+    <table class="table">
+      <thead>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+      </thead>
+
+      {% for user in users %}
+          <tr>
+            <td>{{ user.first_name }}</td>
+            <td>{{ user.last_name }}</td>
+            <td>{{ user.email }}</td>
+          </tr>
+
+      {% endfor %}
+    </table>
+    {% endif %}
+    </div>
+  </body>
+</html>
