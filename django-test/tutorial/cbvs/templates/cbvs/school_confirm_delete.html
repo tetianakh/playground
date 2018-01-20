@@ -1,0 +1,18 @@
+{% extends "cbvs/base.html" %}
+
+{% block body_block %}
+
+<div class="jumbotron">
+
+<h1>
+  Are you sure you want to delete {{ school.name }}?
+</h1>
+
+</div>
+<form class="form" method="post">
+  {% csrf_token %}
+  <a  class="btn btn-success" href="{% url 'cbvs:details' pk=school.pk%}">Cancel</a>
+  <input type="submit" class="btn btn-danger" value="Delete">
+</form>
+
+{%  endblock %}

@@ -1,0 +1,29 @@
+{% extends "cbvs/base.html" %}
+
+{% block body_block %}
+
+<div class="jumbotron">
+
+<h1>Welcome to the school detail page.</h1>
+</div>
+
+<p>Name: {{ school.name }}</p>
+
+<p>Principal: {{ school.principal }}</p>
+
+<p>Location: {{ school.location }}</p>
+
+<p>Students:</p>
+<ol>
+  {% for student in school.students.all %}
+    <li> {{ student.name }}, {{ student.age }} years old </li>
+
+  {% endfor %}
+</ol>
+
+<p>
+   <a class='btn btn-success' href="{% url 'cbvs:update' pk=school.pk %}">Update</a>
+   <a class='btn btn-danger' href="{% url 'cbvs:delete' pk=school.pk %}">Delete</a> 
+</p>
+
+{%  endblock %}
