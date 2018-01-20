@@ -20,7 +20,7 @@ import my_app
 
 urlpatterns = [
     url(r'^my-app/', include('my_app.urls')),
-    url(r'^help/', my_app.views.help, name='help'),
+    url(r'^$', my_app.views.index, name='index'),
     url(r'^users/', include('users.urls')),
     path('admin/', admin.site.urls),
 ]
