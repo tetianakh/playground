@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+
+{% extends "base.html" %}
+
+  {% block body_block %}
+  <div class="jumbotron">
+    <h1>{{ page_title|title }}</h1>
+  </div>
+
+    {% if form %}
+    <form class="form" method="post">
+      {{ form.as_p }}
+      {% csrf_token %}
+      <input type="submit" class="btn btn-primary" value="Submit">
+    </form>
+    {% endif %}
+
+    {% if users %}
+    <table class="table">
+      <thead>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+      </thead>
+
+      {% for user in users %}
+          <tr>
+            <td>{{ user.first_name }}</td>
+            <td>{{ user.last_name }}</td>
+            <td>{{ user.email }}</td>
+          </tr>
+
+      {% endfor %}
+    </table>
+    {% endif %}
+
+{% endblock %}

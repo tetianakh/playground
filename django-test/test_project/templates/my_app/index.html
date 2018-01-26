@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+
+{% extends "base.html" %}
+{% load staticfiles %}
+
+  {% block body_block %}
+
+    <div class="jumbotron">
+        <h1>This page has cat pictures on it.</h1>
+    </div>
+
+    <div class="row">
+      <div class="col-md">
+        <p>This is Dexterek:</p>
+        <img src="{% static "images/dexterek.jpg" %}" alt="Dexter the cat">
+      </div>
+      <div class="col-md">
+          <p>And this is Fistaszek: </p>
+        <img src="{% static "images/fistaszek.jpg" %}" alt="Fistaszek the cat">
+      </div>
+    </div>
+
+   {% endblock %}
