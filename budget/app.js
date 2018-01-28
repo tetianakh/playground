@@ -30,11 +30,14 @@ var BudgetController = (function () {
 
   var updateBudget = function () {
     data.budget = data.totals.inc - data.totals.exp;
+    data.percentage = calculatePercentage(data.totals.exp);
+  }
+
+  var calculatePercentage = function (expense) {
     if (data.totals.inc > 0) {
-      data.percentage = Math.round(data.totals.exp/data.totals.inc * 100);
-    } else {
-      data.percentage = null;
+      return Math.round(expense/data.totals.inc * 100);
     }
+    return null;
   }
 
   return {
@@ -76,6 +79,12 @@ var BudgetController = (function () {
         }
       },
 
+      getPercentages: function () {
+        return data.allItems.exp.map(function(elem) {
+          return calculatePercentage(elem.value);
+        })
+      },
+
       test: function (){
         console.log(data);
       }
@@ -96,6 +105,24 @@ var UIController = (function () {
     expensesTotal: '.budget__expenses--value',
     percentageTotal: '.budget__expenses--percentage',
     container: '.container',
+    itemPercentage: '.item__percentage',
+  }
+
+  var getPercentageLabel = function (percentage) {
+    return percentage === null ? '---' : percentage + '%';
+  }
+
+  var formatNumber = function (type, value) {
+    var numSplit, int, dec;
+    sign = type === 'inc' ? '+' : '-';
+    value = value.toFixed(2);
+    numSplit = value.split('.');
+    int = numSplit[0];
+    dec = numSplit[1];
+    if (int.length > 3) {
+      int = int.substr(0, int.length-3) + ',' + int.substr(int.length - 3, int.length);
+    }
+    return sign + ' ' + int + '.' + dec;
   }
 
   return {
@@ -126,15 +153,15 @@ var UIController = (function () {
         var html, component;
         if (item.type === 'exp'){
           component = document.querySelector(DOMstrings.expensesList);
-          html = '<div class="item clearfix" id="exp-%id%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">- %value%</div><div class="item__percentage">21%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>';
+          html = '<div class="item clearfix" id="exp-%id%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__percentage">21%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>';
         } else {
           component = document.querySelector(DOMstrings.incomeList);
-          html = '<div class="item clearfix" id="inc-%id%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">+ %value%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>';
+          html = '<div class="item clearfix" id="inc-%id%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>';
         }
 
         html = html.replace('%id%', item.id);
         html = html.replace('%description%', item.description);
-        html = html.replace('%value%', item.value);
+        html = html.replace('%value%', formatNumber(item.type, item.value));
         component.insertAdjacentHTML('beforeend', html);
       },
 
@@ -144,22 +171,34 @@ var UIController = (function () {
       },
 
       displayBudget: function (obj) {
-        var perc = obj.percentage === null? '---' : obj.percentage + '%';
-        document.querySelector(DOMstrings.budgetValue).textContent = obj.budget;
-        document.querySelector(DOMstrings.incomeTotal).textContent = obj.income;
-        document.querySelector(DOMstrings.expensesTotal).textContent = obj.expenses;
+        var perc = getPercentageLabel(obj.percentage);
+        var type = obj.budget < 0? 'exp': 'inc';
+        document.querySelector(DOMstrings.budgetValue).textContent = formatNumber(type, obj.budget);
+        document.querySelector(DOMstrings.incomeTotal).textContent = formatNumber('inc', obj.income);
+        document.querySelector(DOMstrings.expensesTotal).textContent = formatNumber('exp', obj.expenses);
         document.querySelector(DOMstrings.percentageTotal).textContent = perc;
+      },
+
+      displayPercentages: function (percentages) {
+        var list = document.querySelectorAll(DOMstrings.itemPercentage);
+        list.forEach(function(node, i){
+          node.textContent = getPercentageLabel(percentages[i]);
+        })
       }
   }
 })();
 
 var AppController = (function (UICtrl, BudgetCtrl) {
 
-  var DOM = UICtrl.getDOMstrings();
 
   var updateBudget = function (){
-    budget = BudgetCtrl.getBudget();
+    var budget = BudgetCtrl.getBudget();
     UICtrl.displayBudget(budget);
+  }
+
+  var updatePercentages = function () {
+    var percentages = BudgetCtrl.getPercentages();
+    UICtrl.displayPercentages(percentages);
   }
 
   var addItemHandler = function () {
@@ -175,6 +214,7 @@ var AppController = (function (UICtrl, BudgetCtrl) {
       UICtrl.clearFields();
       // 5. Update total budget
       updateBudget();
+      updatePercentages();
     }
 
   }
@@ -190,7 +230,7 @@ var AppController = (function (UICtrl, BudgetCtrl) {
       BudgetCtrl.deleteItem(type, id);
       UICtrl.deleteItem(itemId);
       updateBudget();
-
+      updatePercentages();
     }
 
 
@@ -203,6 +243,7 @@ return {
   run: function () {
     UICtrl.displayBudget({budget:0, income:0, expenses:0, percentage: null});
 
+    var DOM = UICtrl.getDOMstrings();
     document.querySelector(DOM.addBtn).addEventListener('click', addItemHandler);
     document.addEventListener('keypress', function () {
       if (event.keyCode === 13) {
