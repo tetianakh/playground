@@ -106,6 +106,7 @@ var UIController = (function () {
     percentageTotal: '.budget__expenses--percentage',
     container: '.container',
     itemPercentage: '.item__percentage',
+    date: '.budget__title--month',
   }
 
   var getPercentageLabel = function (percentage) {
@@ -125,7 +126,28 @@ var UIController = (function () {
     return sign + ' ' + int + '.' + dec;
   }
 
+  var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', "Aug", 'Sept', 'Oct', 'Nov', 'Dec'];
+
   return {
+      displayDate: function () {
+        var now;
+        now = new Date();
+        now = months[now.getMonth()] + ' ' + now.getFullYear();
+        document.querySelector(DOMstrings.date).textContent = now;
+      },
+
+      changeColor: function () {
+        var fields = document.querySelectorAll(
+          DOMstrings.inputType + ',' +
+          DOMstrings.inputDescription + ',' +
+          DOMstrings.inputValue
+        );
+        fields.forEach(function(elem){
+          elem.classList.toggle('red-focus')
+        });
+        var btn = document.querySelector(DOMstrings.addBtn).classList.toggle('red')
+      },
+
       getDOMstrings: function () {
         return DOMstrings;
       },
@@ -242,16 +264,20 @@ var AppController = (function (UICtrl, BudgetCtrl) {
 return {
   run: function () {
     UICtrl.displayBudget({budget:0, income:0, expenses:0, percentage: null});
+    UICtrl.displayDate();
 
     var DOM = UICtrl.getDOMstrings();
     document.querySelector(DOM.addBtn).addEventListener('click', addItemHandler);
+
     document.addEventListener('keypress', function () {
       if (event.keyCode === 13) {
         addItemHandler();
       }
     });
+
     document.querySelector(DOM.container).addEventListener('click', removeItemHandler);
 
+    document.querySelector(DOM.inputType).addEventListener('change', UICtrl.changeColor);
   }
 }
 
