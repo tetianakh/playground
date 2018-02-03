@@ -22,6 +22,10 @@ html {
   margin: 0 auto;
 }
 
+section {
+  padding: 80px 0px;
+}
+
 
 /* ------- BUTTONS ------- */
 
@@ -56,18 +60,57 @@ html {
   border-color: #cf6d17;
 }
 
-/* ------- HEADER ------- */
+/* ------- HEADINGS ------- */
+
+h1, h2, h3 {
+  font-weight: 200;
+}
 
 h1 {
   margin-top: 0;
+  font-size: 280%;
   margin-bottom: 20px;
   color: #fff;
-  font-size: 280%;
-  font-weight: 200;
-  /* text-transform: uppercase; */
-  letter-spacing: 1px;
   word-spacing:  3px;
+  letter-spacing: 1px;
 }
+
+h2 {
+  font-size: 200%;
+  margin-bottom: 30px;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+h3 {
+  font-size: 110%;
+  margin-bottom: 5px;
+  text-transform: uppercase;
+}
+
+/* --------- PARAGRAPHS --------- */
+
+.long-copy {
+  width: 70%;
+  line-height: 150%;
+  margin-left: 15%;
+  margin-right: 15%;
+  text-align: justify;
+
+}
+
+/* --------- ICONS --------- */
+
+.icon-large {
+  display: block;
+  color: #e67e22;
+  margin-bottom: 5px;
+  font-size: 300%;
+}
+
+/* --------- HEADER --------- */
+
 
 header {
   background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(images/hero.jpg);
@@ -116,4 +159,16 @@ header {
 
 .main-nav li a:hover, .main-nav li a:active {
   border-bottom: 2px solid #e67e22;
+}
+
+
+/* --------- FEAUTRES --------- */
+
+.box {
+  padding: 1.5%;
+}
+
+.box p {
+  font-size: 90%;
+  line-height: 150%;
 }
