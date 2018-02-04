@@ -15,6 +15,16 @@ html {
   text-rendering: optimizeLegibility;
 }
 
+.clearfix { zoom: 1}
+
+.clearfix:after {
+  content: '.';
+  clear: both;
+  display: block;
+  height: 0;
+  visibility: hidden;
+}
+
 /* ------- REUSABLE COMPONENTS ------- */
 
 .row {
@@ -171,4 +181,98 @@ header {
 .box p {
   font-size: 90%;
   line-height: 150%;
+}
+
+.section-features .long-copy {
+  margin-bottom: 20px;
+}
+
+/* --------- MEALS --------- */
+
+.section-meals {
+  padding: 0;
+}
+
+.meals-showcase ul{
+  list-style: none;
+  width: 100%;
+}
+
+.meals-showcase li {
+  width: 25%;
+  display: block;
+  float: left;
+}
+
+.meal-fig {
+  width: 100%;
+  overflow: hidden;
+  background-color: black;
+}
+
+.meal-fig img {
+  opacity: 0.7;
+  width: 100%;
+  height: auto;
+  transform: scale(1.15);
+  transition: transform 0.3s, opacity 0.3s;
+}
+
+.meal-fig img:hover {
+  transform: scale(1.05);
+  opacity: 1;
+}
+
+/* --------- STEPS --------- */
+
+
+.steps-box {
+  margin-top: 40px;
+}
+
+.steps-box:first-child {
+  text-align: right;
+  padding-right: 6%;
+
+}
+
+.steps-box:last-child {
+  padding-left: 6%;
+  margin-top: 70px;
+}
+
+.works-step:last-of-type {
+  margin-bottom: 50px;
+}
+
+.app-screen {
+  width: 40%;
+}
+
+.works-step {
+    margin-bottom: 50px;
+}
+
+.works-step div {
+
+  border: 2px solid #e67e22;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  text-align: center;
+  color: #e67e22;
+  display: inline-block;
+  padding: 5px;
+  float: left;
+  font-size: 150%;
+  margin-right: 25px;
+}
+
+.btn-app img {
+  height: 50px;
+  width: auto;
+}
+
+.btn-app {
+  margin-left: 10px;
 }
