@@ -208,6 +208,7 @@ header {
   width: 100%;
   overflow: hidden;
   background-color: black;
+  margin: 0;
 }
 
 .meal-fig img {
@@ -238,6 +239,9 @@ header {
 
 .steps-box:last-child {
   padding-left: 6%;
+}
+
+.works-step:first-of-type {
   margin-top: 70px;
 }
 
