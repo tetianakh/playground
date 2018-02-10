@@ -6,6 +6,10 @@
   box-sizing: border-box;
 }
 
+*:focus {
+  outline: none;
+}
+
 html {
   background-color: #fff;
   color: #444;
@@ -39,7 +43,9 @@ section {
 
 /* ------- BUTTONS ------- */
 
-.btn:link, .btn:visited {
+.btn:link,
+.btn:visited,
+input[type=submit] {
   display: inline-block;
   padding: 10px 30px;
   font-weight: 300;
@@ -49,13 +55,18 @@ section {
   transition: background-color 0.2s, border 0.2s, color 0.2s;
 }
 
-.btn-full:link, .btn-full:visited {
+.btn-full:link,
+.btn-full:visited,
+input[type=submit]{
   background-color: #e67e22;
   color: #fff;
   margin-right: 15px;
 }
 
-.btn-full:hover, .btn-full:active {
+.btn-full:hover,
+.btn-full:active,
+input[type=submit]:hover,
+input[type=submit]:active {
   background-color: #cf6d17;
   border-color: #cf6d17;
 }
@@ -433,4 +444,101 @@ cite img {
 
 .plan-box ul li {
   padding: 5px 0;
+}
+
+/* --------- CONTACT FORM --------- */
+
+
+.section-form {
+  width: 60%;
+  margin: 0 auto;
+}
+
+input[type=text],
+input[type=email],
+select,
+textarea {
+  width: 100%;
+  padding: 7px;
+  border-radius: 3px;
+  border: 1px solid #ccc;
+}
+
+textarea {
+  height: 100px;
+}
+
+input[type=checkbox] {
+  margin: 10px 5px 10px 0;
+}
+
+/* --------- FOOTER --------- */
+
+footer {
+  background-color: #333;
+  padding: 40px;
+  font-size: 80%;
+}
+
+.footer-nav {
+  list-style: none;
+  float: left;
+}
+
+.social-links {
+  list-style: none;
+  float: right;
+}
+
+.footer-nav li,
+.social-links li {
+  display: inline-block;
+  margin-right: 20px;
+}
+
+.social-links li:last-of-type {
+  margin-right: 0;
+}
+
+.footer-nav li a:link,
+.footer-nav li a:visited,
+.social-links li a:link,
+.social-links li a:visited  {
+  text-decoration: none;
+  border: none;
+  color: #888;
+  transition: color 0.2s;
+}
+
+.footer-nav li a:hover,
+.footer-nav li a:active {
+  color: #ccc;
+}
+
+footer p {
+  color: #888;
+  text-align: center;
+  font-size: 90%;
+  margin-top: 20px;
+}
+
+.social-links li a:link,
+.social-links li a:visited  {
+  font-size: 150%;
+}
+
+.ion-social-facebook,
+.ion-social-instagram,
+.ion-social-twitter {
+  transition: color 0.2s;
+}
+
+.ion-social-facebook:hover {
+  color: #3b5998;
+}
+.ion-social-instagram:hover {
+  color: #517fa4;
+}
+.ion-social-twitter:hover {
+  color: #00aced;
 }
